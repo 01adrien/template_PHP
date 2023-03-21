@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<ruleset name="PHP_2_V2">
+    <description>My rules</description>
+
+    <arg name="colors"/>
+    <arg value="p"/>
+
+    <file>app</file>
+    <file>public/index.php</file>
+
+    <rule ref="PSR2"></rule>
+</ruleset>
