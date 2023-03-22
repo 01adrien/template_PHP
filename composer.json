@@ -15,7 +15,8 @@
         "seed:create": "vendor/bin/phinx seed:create $1",
         "seed:run" : "vendor/bin/phinx seed:run",
         "migration:migrate": "vendor/bin/phinx migrate",
-        "migration:create" : "vendor/bin/phinx create $1"
+        "migration:create" : "vendor/bin/phinx create $1",
+        "tailwind:watch": "tailwindcss ./tailwind.config.js  -i public/assets/css/input.css -o public/assets/css/output.css --watch"
     },
     "autoload": {
         "psr-4": {

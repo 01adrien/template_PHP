@@ -1,5 +1,7 @@
 <?php
 
+use Src\App\Controllers\ExempleController;
+use Src\App\Entities\ExempleEntity;
 use Src\Core\Database\DatabaseFactory;
 use Src\Core\DataStructures\StackArray;
 use Src\Core\Interfaces\RendererInterface;
@@ -21,5 +23,5 @@ return [
     new NotFoundHandler()
   ),
   RendererInterface::class => \DI\factory(TwigRendererFactory::class),
-  \PDO::class => \DI\factory(DatabaseFactory::class)
+  \PDO::class => \DI\factory(DatabaseFactory::class),
 ];

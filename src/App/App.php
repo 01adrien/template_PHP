@@ -2,12 +2,14 @@
 
 namespace Src\App;
 
-use Dotenv\Dotenv;
+use Src\App\Controllers\ExempleController;
 use Psr\Container\ContainerInterface;
 use Src\Core\Router\Router;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Src\App\Controllers\ExempleController;
+use Dotenv\Dotenv;
+use Psr\Http\Message\{
+  ResponseInterface as Response,
+  ServerRequestInterface as Request
+};
 use Src\Core\Middlewares\{
   TrailingSlashMiddleware,
   MiddlewareManager,
@@ -47,9 +49,10 @@ class App
   public function getContainer(): ContainerInterface
   {
     if (!$this->container) {
-      $builder = new \DI\ContainerBuilder();
-      $builder->addDefinitions($this->definition);
-      $builder->addDefinitions(ROOT_DIR . '/config.php');
+      $builder =
+        (new \DI\ContainerBuilder())
+        ->addDefinitions($this->definition)
+        ->addDefinitions(ROOT_DIR . '/config.php');
       $this->container = $builder->build();
     }
     return $this->container;

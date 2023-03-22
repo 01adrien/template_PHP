@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none
+  }
+  .btn-primary {
+    @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300
+  }
+  .btn-secondary {
+    @apply text-gray-700 bg-gray-300 hover:bg-gray-400 focus:ring-gray-300
+  } 
+  .nav-link {
+    @apply hover:text-gray-400
+  }
+
+}

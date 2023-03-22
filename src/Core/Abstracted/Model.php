@@ -5,10 +5,9 @@ namespace Src\Core\Abstracted;
 use PDO;
 use PDOStatement;
 
-class Model
+abstract class Model
 {
   protected string $table;
-
   protected $entity;
 
   public function __construct(private PDO $pdo)
@@ -18,11 +17,13 @@ class Model
   /**
    * get all records from selected table
    *
-   * @return array
+   * @return Entity[] | array
    */
   public function all(): array
   {
-    $query = $this->pdo->query("SELECT * from $this->table");
+    $query = $this
+      ->pdo
+      ->query("SELECT * from $this->table");
     $this->setFetchMode($query);
     return $query->fetchAll();
   }
@@ -31,14 +32,33 @@ class Model
    * get one record from selected table
    *
    * @param  mixed $id
-   * @return array
+   * @return Entity | array | bool 
    */
-  public function one(int $id): array|object
+  public function one(int $id): Entity | bool
   {
-    $query = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = ?");
+    $query = $this
+      ->pdo
+      ->prepare("SELECT * FROM $this->table WHERE id = ?");
     $this->setFetchMode($query);
     $query->execute([$id]);
-    return  $query->fetch();
+    return $query->fetch();
+  }
+
+  /**
+   * find a record by provided field
+   *
+   * @param  mixed $field
+   * @param  mixed $value
+   * @return Entity | array
+   */
+  public function findBy(string $field, string $value): Entity | array
+  {
+    $query = $this
+      ->pdo
+      ->prepare("SELECT * FROM {$this->table} WHERE $field = ?");
+
+    $query->execute([$value]);
+    return $query->fetch();
   }
 
   /**
@@ -54,7 +74,9 @@ class Model
       return ':' . $field;
     }, $fields));
     $fields = join(', ', $fields);
-    $query = $this->pdo->prepare("INSERT INTO {$this->table} ($fields) VALUES ($values)");
+    $query = $this
+      ->pdo
+      ->prepare("INSERT INTO {$this->table} ($fields) VALUES ($values)");
     return $query->execute($params);
   }
 
@@ -69,8 +91,37 @@ class Model
   {
     $fieldQuery = $this->buildFieldQuery($params);
     $params["id"] = $id;
-    $query = $this->pdo->prepare("UPDATE {$this->table} SET $fieldQuery WHERE id = :id");
+    $query = $this
+      ->pdo
+      ->prepare("UPDATE {$this->table} SET $fieldQuery WHERE id = :id");
     return $query->execute($params);
+  }
+
+  /**
+   * delete a record by ID
+   *
+   * @param  mixed $id
+   * @return bool
+   */
+  public function delete(int $id): bool
+  {
+    $query = $this
+      ->pdo
+      ->prepare("DELETE FROM {$this->table} WHERE id = ?");
+    return $query->execute([$id]);
+  }
+
+  /**
+   * count records in table
+   *
+   * @return int
+   */
+  public function count(): int
+  {
+    return $this
+      ->pdo
+      ->query("SELECT COUNT(id) FROM {$this->table}")
+      ->fetchColumn();
   }
 
   /**
@@ -89,7 +140,10 @@ class Model
   private function setFetchMode(PDOStatement $query)
   {
     if ($this->entity) {
-      $query->setFetchMode(PDO::FETCH_CLASS, $this->entity);
+      $query->setFetchMode(
+        PDO::FETCH_CLASS,
+        $this->entity
+      );
     }
   }
 }

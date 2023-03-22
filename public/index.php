@@ -10,6 +10,8 @@ define('VIEWS_DIR', dirname(__DIR__) . '/src/App/views');
 
 require ROOT_DIR . '/vendor/autoload.php';
 
-$response = (new App([], APP_DIR . '/config.php'))->run(ServerRequest::fromGlobals());
+$response = (new App([], APP_DIR . '/config.php'))
+  ->run(ServerRequest::fromGlobals());
+
 
 \Http\Response\send($response);
