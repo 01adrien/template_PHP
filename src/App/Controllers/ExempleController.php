@@ -40,7 +40,7 @@ class ExempleController
       <div>
         <h1>{$data->title}</h1>
         <p>{$data->content}</p>
-        <p>{$data->created_at->format('Y-m-d H:i:s')}</p>
+        <p>{$data->getDateObject()->format('d-m-Y')}</p>
 
       </div>
     ";
@@ -48,16 +48,24 @@ class ExempleController
     return "<h1>no record found</h1>";
   }
 
-  #[Route(name: 'create', path: '/create', method: 'POST')]
+  #[Route(name: 'create', path: '/create', method: 'GET')]
   public function create(): string
   {
     $this
       ->exempleEntity
-      ->setTitle('title 450')
-      ->setContent('super content 450')
+      ->setTitle('ygfgfgffggf')
+      ->setContent('superhghghghghghg450')
       ->setCreatedAt(new \DateTime('now'));
 
-    if ($this
+    $isValid = $this
+      ->exempleModel
+      ->validate($this->exempleEntity);
+
+    $errors = $isValid->getErrors();
+
+    if (
+      !$errors &&
+      $this
       ->exempleModel
       ->insert((array)$this->exempleEntity)
     ) {

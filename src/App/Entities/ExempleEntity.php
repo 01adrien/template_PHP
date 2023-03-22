@@ -3,34 +3,31 @@
 namespace Src\App\Entities;
 
 use DateTime;
+use Exception;
 use Src\Core\Abstracted\Entity;
+use Src\Core\Attributes\Validation\Length;
 
 class ExempleEntity extends Entity
 {
   public ?int $id = null;
-  public ?string $title = null;
-  public ?string $content = null;
-  public string|DateTime|null $created_at = null;
 
-  public function __construct()
-  {
-    if ($this->created_at) {
-      $this->created_at = DateTime::createFromFormat(
-        'Y-m-d H:i:s',
-        $this->created_at
-      );
-    }
-  }
+  #[Length(2, 50)]
+  public ?string $title = null;
+
+  #[Length(2, 1000)]
+  public ?string $content = null;
+
+  private string|DateTime|null $created_at = null;
 
   public function setTitle(string $title): self
   {
-    $this->title = $title;
+    $this->title = trim($title);
     return $this;
   }
 
   public function setContent(string $content): self
   {
-    $this->content = $content;
+    $this->content = trim($content);
     return $this;
   }
 
@@ -38,5 +35,15 @@ class ExempleEntity extends Entity
   {
     $this->created_at = $date->format('Y-m-d H:i:s');
     return $this;
+  }
+
+  public function getDateObject(): DateTime
+  {
+    if (is_string($this->created_at)) {
+      return $this->created_at = DateTime::createFromFormat(
+        'Y-m-d H:i:s',
+        $this->created_at
+      );
+    } else throw new Exception('the date must be a string');
   }
 }

@@ -1,7 +1,5 @@
 <?php
 
-use Src\App\Controllers\ExempleController;
-use Src\App\Entities\ExempleEntity;
 use Src\Core\Database\DatabaseFactory;
 use Src\Core\DataStructures\StackArray;
 use Src\Core\Interfaces\RendererInterface;

@@ -137,7 +137,7 @@ abstract class Model
     }, array_keys($params)));
   }
 
-  private function setFetchMode(PDOStatement $query)
+  private function setFetchMode(PDOStatement $query): void
   {
     if ($this->entity) {
       $query->setFetchMode(
