@@ -2,7 +2,10 @@
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Src\App\App;
-use Src\App\Modules\ExempleModule;
+use Src\App\Modules\{
+  DashboardModule,
+  ExempleModule
+};
 
 define('ROOT_DIR', dirname(__DIR__));
 define('APP_DIR', dirname(__DIR__) . '/src/App');
@@ -13,7 +16,8 @@ define('BUILD_DIR', __DIR__ . '/build');
 require ROOT_DIR . '/vendor/autoload.php';
 
 $response = (new App([
-  ExempleModule::class
+  ExempleModule::class,
+  DashboardModule::class
 ], APP_DIR . '/config.php'))
   ->run(ServerRequest::fromGlobals());
 
