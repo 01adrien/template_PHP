@@ -9,13 +9,13 @@
     ],
     "scripts": {
         "serve": "php -S 127.0.0.1:8080 -d display_errors=1 -t public",
-        "tests": "./vendor/bin/phpunit ",
+        "tests": "./vendor/bin/phpunit",
         "sniff": "./vendor/bin/phpcs",
         "format": "./vendor/bin/phpcbf",
         "seed:create": "vendor/bin/phinx seed:create $1",
         "seed:run" : "vendor/bin/phinx seed:run",
-        "migration:migrate": "vendor/bin/phinx migrate",
         "migration:create" : "vendor/bin/phinx create $1",
+        "migration:run": "vendor/bin/phinx migrate",
         "tailwind:watch": "tailwindcss ./tailwind.config.js  -i src/App/assets/css/input.css -o src/App/assets/css/output.css --watch"
     },
     "autoload": {

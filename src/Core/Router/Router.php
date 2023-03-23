@@ -28,12 +28,13 @@ class Router implements RouterInterface
      * @param  mixed $callable
      * @param  mixed $name
      * @param  mixed $httpMethod
-     * @return void
+     * @return self
      */
-    public function addRoute(string $path, $callable, ?string $name = null, string $httpMethod): void
+    public function addRoute(string $path, $callable, ?string $name = null, string $httpMethod): self
     {
         $method = strtolower($httpMethod);
         $this->router->getMap()->$method($name, $path, $callable);
+        return $this;
     }
 
     /**

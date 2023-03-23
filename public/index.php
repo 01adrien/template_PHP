@@ -3,7 +3,6 @@
 use GuzzleHttp\Psr7\ServerRequest;
 use Src\App\App;
 use Src\App\Modules\{
-  DashboardModule,
   ExempleModule
 };
 
@@ -17,7 +16,6 @@ require ROOT_DIR . '/vendor/autoload.php';
 
 $response = (new App([
   ExempleModule::class,
-  DashboardModule::class
 ], APP_DIR . '/config.php'))
   ->run(ServerRequest::fromGlobals());
 

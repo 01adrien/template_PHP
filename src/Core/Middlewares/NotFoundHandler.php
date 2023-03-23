@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Src\Core\Interfaces\RendererInterface;
 
 class NotFoundHandler implements RequestHandlerInterface
 {
@@ -19,6 +20,6 @@ class NotFoundHandler implements RequestHandlerInterface
    */
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
-    return new Response(404, [], '<h1>' .  $request->getUri()->getPath() . ' not found on this server</h1>');
+    return new Response(404, [], require VIEWS_DIR . '/404.twig');
   }
 }

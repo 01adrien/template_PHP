@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 interface RouterInterface
 {
-  public function addRoute(string $path, $callable, string $name, string $httpMethod): void;
+  public function addRoute(string $path, $callable, string $name, string $httpMethod): self;
 
   public function match(Request $request): ?Route;
 
