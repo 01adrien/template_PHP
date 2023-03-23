@@ -2,9 +2,7 @@
 
 namespace Src\App;
 
-use Src\App\Controllers\ExempleController;
 use Psr\Container\ContainerInterface;
-use Src\Core\Router\Router;
 use Dotenv\Dotenv;
 use Psr\Http\Message\{
   ResponseInterface as Response,
@@ -27,17 +25,16 @@ class App
   ) {
     $dotenv = Dotenv::createImmutable(ROOT_DIR);
     $dotenv->load();
+    $container = $this->getContainer();
+
+    foreach ($modules as $module) {
+      $container->get($module);
+    }
   }
 
   public function run(Request $request): Response
   {
     $container = $this->getContainer();
-    $container
-      ->get(Router::class)
-      ->registerRoutesFromControllersAttributes([
-        ExempleController::class
-      ]);
-
     return
       $container
       ->get(MiddlewareManager::class)
