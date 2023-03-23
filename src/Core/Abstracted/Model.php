@@ -67,7 +67,7 @@ abstract class Model
    * @param  mixed $params
    * @return bool
    */
-  public function insert(array $params): bool
+  public function insert(array $params)
   {
     $fields = array_keys($params);
     $values = join(', ', array_map(function ($field) {

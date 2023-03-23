@@ -5,19 +5,23 @@ namespace Src\App\Entities;
 use DateTime;
 use Exception;
 use Src\Core\Abstracted\Entity;
-use Src\Core\Attributes\Validation\Length;
+use Src\Core\Attributes\Validation\{
+  Email,
+  Length,
+  Required
+};
 
 class ExempleEntity extends Entity
 {
   public ?int $id = null;
 
-  #[Length(2, 50)]
+  #[Length(2, 50), Required()]
   public ?string $title = null;
 
-  #[Length(2, 1000)]
+  #[Length(2, 1000), Required()]
   public ?string $content = null;
 
-  private string|DateTime|null $created_at = null;
+  public string|DateTime|null $created_at = null;
 
   public function setTitle(string $title): self
   {

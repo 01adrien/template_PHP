@@ -8,7 +8,6 @@ use Src\Core\Abstracted\{
   Entity,
   Model
 };
-use Src\Core\Attributes\Validation\Length;
 use Src\Core\Validator\ErrorsObject;
 use Src\Core\Validator\Validator;
 
@@ -26,7 +25,7 @@ class ExempleModel extends Model implements ValidationInterface
   }
 
   /**
-   * validate provided data in relation with ExempleEntity properties attributes 
+   * validate provided data in relation with ExempleEntity properties attributes
    *
    * @param  mixed $entity
    */
@@ -35,18 +34,10 @@ class ExempleModel extends Model implements ValidationInterface
     $reflection = new \ReflectionClass($this->entity);
     $properties = $reflection->getProperties();
     foreach ($properties as $property) {
-      /** check the lehgth attribute */
-      $lengthAttrs = $property->getAttributes(
-        Length::class,
-        \ReflectionAttribute::IS_INSTANCEOF
-      );
-      foreach ($lengthAttrs as $attr) {
-        $this->validator->validateLength(
-          $entity,
-          $attr->newInstance(),
-          $property->getName()
-        );
-      }
+      $this
+        ->validator
+        ->isRequired($entity, $property)
+        ->validateLength($entity, $property);
     }
     return $this->validator->getErrors();
   }

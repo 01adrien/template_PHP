@@ -31,16 +31,16 @@ class ExempleController
   #[Route(name: 'one', path: '/one/{id}', method: 'GET')]
   public function one(Request $request): string
   {
-    /**  @var ExempleEntity $data */
-    $data = $this
+    /**  @var ExempleEntity $entity */
+    $entity = $this
       ->exempleModel
       ->one($request->getAttribute('id'));
-    if ($data) {
+    if ($entity) {
       return "
       <div>
-        <h1>{$data->title}</h1>
-        <p>{$data->content}</p>
-        <p>{$data->getDateObject()->format('d-m-Y')}</p>
+        <h1>{$entity->title}</h1>
+        <p>{$entity->content}</p>
+        <p>{$entity->getDateObject()->format('d-m-Y')}</p>
 
       </div>
     ";
@@ -48,13 +48,14 @@ class ExempleController
     return "<h1>no record found</h1>";
   }
 
-  #[Route(name: 'create', path: '/create', method: 'GET')]
-  public function create(): string
+  #[Route(name: 'create', path: '/create', method: 'POST')]
+  public function create(Request $request)
   {
+    $body = json_decode($request->getBody()->getContents());
     $this
       ->exempleEntity
-      ->setTitle('ygfgfgffggf')
-      ->setContent('superhghghghghghg450')
+      ->setTitle($body->title)
+      ->setContent($body->content)
       ->setCreatedAt(new \DateTime('now'));
 
     $isValid = $this
@@ -62,7 +63,6 @@ class ExempleController
       ->validate($this->exempleEntity);
 
     $errors = $isValid->getErrors();
-
     if (
       !$errors &&
       $this
@@ -71,25 +71,37 @@ class ExempleController
     ) {
       return "<h1>created</h1>";
     };
-    return "<h1>issue with creation</h1>";
+    return json_encode($errors);
   }
 
-  #[Route(name: 'update', path: '/update/{id}', method: 'POST')]
+  #[Route(name: 'update', path: '/update', method: 'POST')]
   public function update(Request $request): string
   {
-    if ($this
+    $body = json_decode($request->getBody()->getContents());
+
+    /**  @var ExempleEntity $entity */
+    $entity = $this->exempleModel->one($body->id);
+
+    if (!$entity) return "<h1>no record found</h1>";
+
+    foreach ($body as $prop => $value) {
+      $entity->$prop = $value;
+    }
+    $isValid = $this
       ->exempleModel
-      ->update(
-        $request->getAttribute('id'),
-        [
-          'title' => 'my super title',
-          'content' => 'my super content'
-        ]
-      )
+      ->validate($entity);
+
+    $errors = $isValid->getErrors();
+
+    if (
+      !$errors &&
+      $this
+      ->exempleModel
+      ->update($body->id, (array)$entity)
     ) {
       return  "<h1>updated</h1>";
     };
-    return "<h1>issue with update</h1>";
+    return json_encode($errors);
   }
 
   #[Route(name: 'delete', path: '/delete/{id}', method: 'DELETE')]
