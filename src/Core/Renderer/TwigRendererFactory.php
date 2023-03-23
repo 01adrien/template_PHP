@@ -2,30 +2,28 @@
 
 namespace Src\Core\Renderer;
 
+use DI\Container;
 use Pagerfanta\Twig\Extension\PagerfantaExtension;
 use Psr\Container\ContainerInterface;
+use Symfony\Bridge\Twig\Extension\AssetExtension;
+use Symfony\WebpackEncoreBundle\Twig\EntryFilesTwigExtension;
 use Twig\Environment;
+use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
-use Twig\RuntimeLoader\ContainerRuntimeLoader;
 
 class TwigRendererFactory
 {
 
-    public function __invoke(): TwigRenderer
+    public function __invoke(Container $container): TwigRenderer
     {
         $loader = new FilesystemLoader(VIEWS_DIR);
         $twig = new Environment($loader, [
             'debug' => true,
             'cache' => false,
         ]);
-        /*
-        $twig->addRuntimeLoader(new ContainerRuntimeLoader($container));
-        if ($container->has('twig.extensions')) {
-            foreach ($container->get('twig.extensions') as $extension) {
-                $twig->addExtension($extension);
-            }
-        }
-        */
+        // $twig->addExtension(new IntlExtension());
+        $twig->addExtension(new EntryFilesTwigExtension($container));
+        $twig->addExtension(new AssetExtension($container->get('webpack_encore.packages')));
         return new TwigRenderer($loader, $twig);
     }
 }

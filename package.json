@@ -1,0 +1,32 @@
+{
+  "name": "bill_app",
+  "version": "1.0.0",
+  "description": "template for PHP app with routing, middlewares, depedencies injection...",
+  "main": "tailwind.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.6",
+    "@symfony/webpack-encore": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "file-loader": "^6.2.0",
+    "webpack-notifier": "^1.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/01adrien/template_PHP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/01adrien/template_PHP/issues"
+  },
+  "homepage": "https://github.com/01adrien/template_PHP#readme"
+}

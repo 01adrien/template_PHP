@@ -7,6 +7,7 @@ define('ROOT_DIR', dirname(__DIR__));
 define('APP_DIR', dirname(__DIR__) . '/src/App');
 define('CORE_DIR', dirname(__DIR__) . '/src/Core');
 define('VIEWS_DIR', dirname(__DIR__) . '/src/App/views');
+define('BUILD_DIR', __DIR__ . '/build');
 
 require ROOT_DIR . '/vendor/autoload.php';
 

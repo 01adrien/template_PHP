@@ -27,7 +27,7 @@ class ExempleModel extends Model implements ValidationInterface
   /**
    * validate provided data in relation with ExempleEntity properties attributes
    *
-   * @param  mixed $entity
+   * @param  ExempleEntity $entity
    */
   public function validate(Entity $entity): ErrorsObject
   {

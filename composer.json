@@ -16,7 +16,7 @@
         "seed:run" : "vendor/bin/phinx seed:run",
         "migration:migrate": "vendor/bin/phinx migrate",
         "migration:create" : "vendor/bin/phinx create $1",
-        "tailwind:watch": "tailwindcss ./tailwind.config.js  -i public/assets/css/input.css -o public/assets/css/output.css --watch"
+        "tailwind:watch": "tailwindcss ./tailwind.config.js  -i src/App/assets/css/input.css -o src/App/assets/css/output.css --watch"
     },
     "autoload": {
         "psr-4": {
@@ -32,7 +32,10 @@
         "vlucas/phpdotenv": "^5.5",
         "aura/router": "^3.2",
         "twig/twig": "^3.5",
-        "php-di/php-di": "^7.0"
+        "php-di/php-di": "^7.0",
+        "symfony/twig-bridge": "^6.1",
+        "symfony/webpack-encore-bundle": "^1.15",
+        "twig/intl-extra": "^3.4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
