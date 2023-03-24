@@ -2,24 +2,20 @@
 
 namespace Src\Core\Middlewares;
 
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Server\RequestHandlerInterface;
-use Src\Core\Interfaces\RendererInterface;
 
 class NotFoundHandler implements RequestHandlerInterface
 {
   /**
    * Handles a request and produces a response.
    *
-   * May call other collaborating code to generate the response.
-   *
-   * @param ServerRequestInterface $request
-   * @return ResponseInterface
+   * @param Request $request
+   * @return Response
    */
-  public function handle(ServerRequestInterface $request): ResponseInterface
+  public function handle(Request $request): Response
   {
-    return new Response(404, [], require VIEWS_DIR . '/404.twig');
+    return new \GuzzleHttp\Psr7\Response(404, [], require VIEWS_DIR . '/404.twig');
   }
 }

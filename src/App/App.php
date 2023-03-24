@@ -11,7 +11,9 @@ use Psr\Http\Message\{
 use Src\Core\Middlewares\{
   TrailingSlashMiddleware,
   MiddlewareManager,
-  RouterMiddleware
+  RouterMiddleware,
+  MethodMiddleware,
+  DispatcherMiddleware
 };
 
 
@@ -34,13 +36,15 @@ class App
 
   public function run(Request $request): Response
   {
-    $container = $this->getContainer();
-    return
-      $container
-      ->get(MiddlewareManager::class)
-      ->push($container->get(RouterMiddleware::class))
-      ->push($container->get(TrailingSlashMiddleware::class))
-      ->handle($request);
+    $c = $this->getContainer();
+
+    /** @var MiddlewareManager $middlewaresManager */
+    $middlewaresManager = $c->get(MiddlewareManager::class);
+
+    foreach ($c->get('base.middlewares') as $m) {
+      $middlewaresManager->push($c->get($m));
+    }
+    return $middlewaresManager->handle($request);
   }
 
   public function getContainer(): ContainerInterface

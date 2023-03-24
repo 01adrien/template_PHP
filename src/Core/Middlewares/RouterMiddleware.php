@@ -2,13 +2,12 @@
 
 namespace Src\Core\Middlewares;
 
-use DI\Container;
-use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as Handler;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Server\MiddlewareInterface;
 use Src\Core\Router\Router;
+use DI\Container;
 
 
 class RouterMiddleware implements MiddlewareInterface
@@ -24,15 +23,11 @@ class RouterMiddleware implements MiddlewareInterface
   /**
    * Process an incoming server request.
    *
-   * Processes an incoming server request in order to produce a response.
-   * If unable to produce the response itself, it may delegate to the provided
-   * request handler to do so.
-   *
    * @param Request $request
    * @param Handler $handler
-   * @return ResponseInterface
+   * @return Response
    */
-  public function process(Request $request, Handler $handler): ResponseInterface
+  public function process(Request $request, Handler $handler): Response
   {
     $route = $this->container->get(Router::class)->match($request);
     if (is_null($route)) {
@@ -41,25 +36,8 @@ class RouterMiddleware implements MiddlewareInterface
     foreach ($route->getParams() as $key => $val) {
       $request = $request->withAttribute($key, $val);
     }
-    if (is_callable($route->getCallback())) {
-      return new Response(200, [], call_user_func_array(
-        $route->getCallback(),
-        [$request]
-      ));
-    }
-    if (is_array($route->getCallback())) {
-      [$className, $method] = $route->getCallback();
-      $response = call_user_func_array(
-        [$this->container->get($className), $method],
-        [$request]
-      );
-    }
-    if ($response) {
-      return new Response(200, [], $response);
-    } elseif ($response instanceof ResponseInterface) {
-      return $response;
-    } else {
-      throw new \Exception('The response is not correct');
-    }
+    $request = $request->withAttribute(get_class($route), $route);
+
+    return $handler->handle($request);
   }
 }

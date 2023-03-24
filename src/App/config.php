@@ -4,13 +4,15 @@ use Psr\Container\ContainerInterface;
 use Src\Core\Database\DatabaseFactory;
 use Src\Core\DataStructures\StackArray;
 use Src\Core\Interfaces\RendererInterface;
-use Src\Core\Middlewares\{
-  MiddlewareManager,
-  NotFoundHandler
-};
-
-
 use Src\Core\Renderer\TwigRendererFactory;
+use Src\Core\Middlewares\{
+  DispatcherMiddleware,
+  MethodMiddleware,
+  MiddlewareManager,
+  NotFoundHandler,
+  RouterMiddleware,
+  TrailingSlashMiddleware
+};
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
@@ -35,4 +37,10 @@ return [
     new EntrypointLookup(BUILD_DIR . '/entrypoints.json'),
     $container->get('webpack_encore.packages')
   ),
+  'base.middlewares' => [
+    DispatcherMiddleware::class,
+    RouterMiddleware::class,
+    MethodMiddleware::class,
+    TrailingSlashMiddleware::class
+  ]
 ];

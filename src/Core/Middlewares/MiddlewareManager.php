@@ -5,8 +5,8 @@ namespace Src\Core\Middlewares;
 use Src\Core\Interfaces\StackInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class MiddlewareManager implements RequestHandlerInterface
 {
@@ -38,10 +38,10 @@ class MiddlewareManager implements RequestHandlerInterface
    * Handles a request and produces a response.
    * May call other collaborating code to generate the response.
    *
-   * @param ServerRequestInterface $request
-   * @return ResponseInterface
+   * @param Request $request
+   * @return Response
    */
-  public function handle(ServerRequestInterface $request): ResponseInterface
+  public function handle(Request $request): Response
   {
     if (!$this->stack->length()) {
       return $this->fallback->handle($request);
