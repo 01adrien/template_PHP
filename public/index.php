@@ -5,9 +5,7 @@ use Src\App\App;
 use Src\App\Modules\{
   AdminModule,
   AuthModule,
-  DashboardModule,
   ExempleModule,
-  TransactionModule,
   UserModule
 };
 
@@ -21,15 +19,14 @@ require APP_DIR   . '/config/errorsConfig.php';
 $app = new App(
   modules: [
     ExempleModule::class,
-    DashboardModule::class,
     AuthModule::class,
     AdminModule::class,
     UserModule::class,
-    TransactionModule::class
   ],
   dependencies: [
     APP_DIR . '/config/dependencies.php',
-    CORE_DIR . '/Config/dependencies.php'
+    CORE_DIR . '/Config/dependencies.php',
+    ROOT_DIR . '/config.php'
   ]
 );
 
