@@ -2,6 +2,7 @@
 
 namespace Src\Core\Abstracted;
 
+use Clockwork\Support\Vanilla\Clockwork;
 use PDO;
 use PDOStatement;
 
@@ -19,7 +20,7 @@ abstract class Model
    *
    * @return Entity[] | array
    */
-  public function all(): array
+  public function all(): array | Entity
   {
     $query = $this
       ->pdo
@@ -34,14 +35,28 @@ abstract class Model
    * @param  mixed $id
    * @return Entity | array | bool 
    */
-  public function one(int $id): Entity | bool
+  public function one(array $params): Entity | bool
+  {
+    $time = microtime(true);
+    $query = $this
+      ->pdo
+      ->prepare($this->getByIdQuery());
+    $this->setFetchMode($query);
+    $query->execute($params);
+    $result = $query->fetch();
+    clock()->addDatabaseQuery($this->getByIdQuery(), $params, (microtime(true) - $time) * 1000);
+    return $result;
+  }
+
+  public function getPaginated(int $limit, int $offset, array $params): Entity | bool | array
   {
     $query = $this
       ->pdo
-      ->prepare("SELECT * FROM $this->table WHERE id = ?");
+      ->prepare($this->paginatedQuery($limit, $offset));
     $this->setFetchMode($query);
-    $query->execute([$id]);
-    return $query->fetch();
+    $query->execute($params);
+    $result = $query->fetchAll();
+    return $result;
   }
 
   /**
@@ -51,14 +66,14 @@ abstract class Model
    * @param  mixed $value
    * @return Entity | array
    */
-  public function findBy(string $field, string $value): Entity | array
+  public function findBy(string $field, string $value): Entity | array | bool
   {
     $query = $this
       ->pdo
-      ->prepare("SELECT * FROM {$this->table} WHERE $field = ?");
-
+      ->prepare($this->findByQuery($field));
+    $this->setFetchMode($query);
     $query->execute([$value]);
-    return $query->fetch();
+    return $query->fetchAll();
   }
 
   /**
@@ -67,7 +82,7 @@ abstract class Model
    * @param  mixed $params
    * @return bool
    */
-  public function insert(array $params)
+  public function insert(array $params): bool | int
   {
     $fields = array_keys($params);
     $values = join(', ', array_map(function ($field) {
@@ -77,7 +92,10 @@ abstract class Model
     $query = $this
       ->pdo
       ->prepare("INSERT INTO {$this->table} ($fields) VALUES ($values)");
-    return $query->execute($params);
+    if ($query->execute($params)) {
+      return $this->pdo->lastInsertId();
+    };
+    return false;
   }
 
   /**
@@ -116,12 +134,31 @@ abstract class Model
    *
    * @return int
    */
-  public function count(): int
+  public function count(array $params): int
   {
-    return $this
+    $query = $this
       ->pdo
-      ->query("SELECT COUNT(id) FROM {$this->table}")
-      ->fetchColumn();
+      ->prepare($this->countQuery());
+    $query->execute($params);
+    return $query->fetchColumn();
+  }
+
+
+  /**
+   *  return no more than the entity and properties no join or else...
+   *
+   * @param  mixed $id
+   * @return Entity
+   */
+  public function getEntity(int $id): Entity | bool
+  {
+    $query = $this
+      ->pdo
+      ->prepare("SELECT * FROM $this->table WHERE id = ?");
+    $this->setFetchMode($query);
+    $query->execute([$id]);
+    $result = $query->fetch();
+    return $result;
   }
 
   /**
@@ -130,20 +167,37 @@ abstract class Model
    * @param  mixed $params
    * @return string
    */
-  private function buildFieldQuery(array $params): string
+  protected function buildFieldQuery(array $params): string
   {
     return join(', ', array_map(function ($field) {
       return "$field = :$field";
     }, array_keys($params)));
   }
 
-  private function setFetchMode(PDOStatement $query): void
+  protected function setFetchMode(PDOStatement $query): void
   {
     if ($this->entity) {
-      $query->setFetchMode(
-        PDO::FETCH_CLASS,
-        $this->entity
-      );
+      $query->setFetchMode(PDO::FETCH_CLASS, $this->entity);
     }
+  }
+
+  protected function findByQuery($field): string
+  {
+    return "SELECT * FROM {$this->table} WHERE $field = ?";
+  }
+
+  protected function paginatedQuery(int $limit, int $offset): string
+  {
+    return "SELECT * FROM {$this->table} LIMIT $limit OFFSET $offset";
+  }
+
+  protected function countQuery(): string
+  {
+    return "SELECT COUNT(id) FROM {$this->table} ";
+  }
+
+  protected function getByIdQuery(): string
+  {
+    return "SELECT * FROM $this->table WHERE id =:id";
   }
 }

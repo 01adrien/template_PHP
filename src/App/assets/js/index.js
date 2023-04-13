@@ -1,3 +1,3 @@
 import "../css/output.css"
-
-console.log("ok")
+import "toastify-js/src/toastify.css"
+import 'flowbite';

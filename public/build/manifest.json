@@ -1,7 +1,17 @@
 {
   "build/index.css": "/build/index.css",
   "build/index.js": "/build/index.js",
+  "build/categories.js": "/build/categories.js",
+  "build/transactions.js": "/build/transactions.js",
+  "build/upload.js": "/build/upload.js",
+  "build/import.js": "/build/import.js",
   "build/runtime.js": "/build/runtime.js",
-  "build/images/Screenshot from 2023-03-16 22-42-40.png": "/build/images/Screenshot from 2023-03-16 22-42-40.95002a78.png",
-  "build/images/logo.png": "/build/images/logo.d391a209.png"
+  "build/vendors-node_modules_flowbite_lib_esm_index_js.js": "/build/vendors-node_modules_flowbite_lib_esm_index_js.js",
+  "build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-4e9101.js": "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-4e9101.js",
+  "build/vendors-node_modules_core-js_modules_es_array_includes_js-node_modules_core-js_modules_es_arr-8a9d1d.js": "/build/vendors-node_modules_core-js_modules_es_array_includes_js-node_modules_core-js_modules_es_arr-8a9d1d.js",
+  "build/src_App_assets_js_axiosInstance_js-src_App_assets_js_components_AbstactModalFormComponent_js--a745c2.js": "/build/src_App_assets_js_axiosInstance_js-src_App_assets_js_components_AbstactModalFormComponent_js--a745c2.js",
+  "build/src_App_assets_js_services_transactionService_js-src_App_assets_js_utils_animation_js.js": "/build/src_App_assets_js_services_transactionService_js-src_App_assets_js_utils_animation_js.js",
+  "build/images/Screenshot from 2023-03-16 22-42-40.png": "/build/images/Screenshot from 2023-03-16 22-42-40.png",
+  "build/images/logo.png": "/build/images/logo.png",
+  "build/images/user_default.jpg": "/build/images/user_default.jpg"
 }

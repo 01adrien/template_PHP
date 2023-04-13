@@ -3,24 +3,26 @@
 namespace Src\App\Entities;
 
 use DateTime;
-use Exception;
+use \Src\Core\Behavior\EntityDateBehavior;
 use Src\Core\Abstracted\Entity;
 use Src\Core\Attributes\Validation\{
-  Email,
+  Date,
   Length,
   Required
 };
 
 class ExempleEntity extends Entity
 {
-  public ?int $id = null;
 
-  #[Length(2, 50), Required()]
+  use EntityDateBehavior;
+
+  #[Length(2, 50), Required]
   public ?string $title = null;
 
-  #[Length(2, 1000), Required()]
+  #[Length(2, 1000), Required]
   public ?string $content = null;
 
+  #[Date]
   public string|DateTime|null $created_at = null;
 
   public function setTitle(string $title): self
@@ -33,21 +35,5 @@ class ExempleEntity extends Entity
   {
     $this->content = trim($content);
     return $this;
-  }
-
-  public function setCreatedAt(DateTime $date): self
-  {
-    $this->created_at = $date->format('Y-m-d H:i:s');
-    return $this;
-  }
-
-  public function getDateObject(): DateTime
-  {
-    if (is_string($this->created_at)) {
-      return $this->created_at = DateTime::createFromFormat(
-        'Y-m-d H:i:s',
-        $this->created_at
-      );
-    } else throw new Exception('the date must be a string');
   }
 }

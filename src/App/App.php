@@ -3,34 +3,27 @@
 namespace Src\App;
 
 use Psr\Container\ContainerInterface;
-use Dotenv\Dotenv;
 use Psr\Http\Message\{
   ResponseInterface as Response,
   ServerRequestInterface as Request
 };
 use Src\Core\Middlewares\{
-  TrailingSlashMiddleware,
   MiddlewareManager,
-  RouterMiddleware,
-  MethodMiddleware,
-  DispatcherMiddleware
 };
-
+use Dotenv\Dotenv;
 
 class App
 {
   private ?ContainerInterface $container = null;
 
-  public function __construct(
-    private array $modules,
-    private string $definition,
-  ) {
+  public function __construct(private array $modules, private array $dependencies)
+  {
     $dotenv = Dotenv::createImmutable(ROOT_DIR);
     $dotenv->load();
-    $container = $this->getContainer();
+    $c = $this->getContainer();
 
     foreach ($modules as $module) {
-      $container->get($module);
+      $c->get($module);
     }
   }
 
@@ -38,10 +31,10 @@ class App
   {
     $c = $this->getContainer();
 
-    /** @var MiddlewareManager $middlewaresManager */
-    $middlewaresManager = $c->get(MiddlewareManager::class);
-
-    foreach ($c->get('base.middlewares') as $m) {
+    $middlewaresManager = $c->get(
+      MiddlewareManager::class
+    );
+    foreach ($c->get('middlewares') as $m) {
       $middlewaresManager->push($c->get($m));
     }
     return $middlewaresManager->handle($request);
@@ -50,10 +43,10 @@ class App
   public function getContainer(): ContainerInterface
   {
     if (!$this->container) {
-      $builder =
-        (new \DI\ContainerBuilder())
-        ->addDefinitions($this->definition)
-        ->addDefinitions(ROOT_DIR . '/config.php');
+      $builder = new \DI\ContainerBuilder();
+      foreach ($this->dependencies as $dep) {
+        $builder->addDefinitions($dep);
+      }
       $this->container = $builder->build();
     }
     return $this->container;

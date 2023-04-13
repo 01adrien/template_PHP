@@ -3,20 +3,36 @@
 use GuzzleHttp\Psr7\ServerRequest;
 use Src\App\App;
 use Src\App\Modules\{
-  ExempleModule
+  AdminModule,
+  AuthModule,
+  DashboardModule,
+  ExempleModule,
+  TransactionModule,
+  UserModule
 };
 
-define('ROOT_DIR', dirname(__DIR__));
-define('APP_DIR', dirname(__DIR__) . '/src/App');
-define('CORE_DIR', dirname(__DIR__) . '/src/Core');
-define('VIEWS_DIR', dirname(__DIR__) . '/src/App/views');
-define('BUILD_DIR', __DIR__ . '/build');
+
+require dirname(__DIR__) . '/src/App/config/pathsConstants.php';
 
 require ROOT_DIR . '/vendor/autoload.php';
 
-$response = (new App([
-  ExempleModule::class,
-], APP_DIR . '/config.php'))
-  ->run(ServerRequest::fromGlobals());
+require APP_DIR   . '/config/errorsConfig.php';
+
+$app = new App(
+  modules: [
+    ExempleModule::class,
+    DashboardModule::class,
+    AuthModule::class,
+    AdminModule::class,
+    UserModule::class,
+    TransactionModule::class
+  ],
+  dependencies: [
+    APP_DIR . '/config/dependencies.php',
+    CORE_DIR . '/Config/dependencies.php'
+  ]
+);
+
+$response = $app->run(ServerRequest::fromGlobals());
 
 \Http\Response\send($response);

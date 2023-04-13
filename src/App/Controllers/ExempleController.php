@@ -35,12 +35,14 @@ class ExempleController
     $entity = $this
       ->exempleModel
       ->one($request->getAttribute('id'));
+    $date = $entity->getDateObject($entity->created_at);
+
     if ($entity) {
       return "
       <div>
         <h1>{$entity->title}</h1>
         <p>{$entity->content}</p>
-        <p>{$entity->getDateObject()->format('d-m-Y')}</p>
+        <p>{$date->format('d-m-Y')}</p>
 
       </div>
     ";

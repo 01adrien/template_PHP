@@ -5,6 +5,7 @@ namespace Tests\Core\Router;
 use GuzzleHttp\Psr7\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Src\Core\Router\Router;
+use Tests\Core\Fixtures\ControllerFixture;
 use Tests\Core\Fixtures\TestController;
 
 class TestRouter extends TestCase
@@ -111,12 +112,12 @@ class TestRouter extends TestCase
     $req = new ServerRequest('GET', '/index');
     $route = $this
       ->router
-      ->addRoute('/index', [TestController::class, 'index'], 'index', 'GET')
+      ->addRoute('/index', [ControllerFixture::class, 'index'], 'index', 'GET')
       ->match($req);
 
     [$className, $method] = $route->getCallback();
 
-    $this->assertEquals('Tests\Core\Fixtures\TestController', $className);
+    $this->assertEquals('Tests\Core\Fixtures\ControllerFixture', $className);
 
     $this->assertEquals(
       'index page',
@@ -140,7 +141,7 @@ class TestRouter extends TestCase
 
     [$className, $method] = $route->getCallback();
 
-    $this->assertEquals('Tests\Core\Fixtures\TestController', $className);
+    $this->assertEquals('Tests\Core\Fixtures\ControllerFixture', $className);
     $this->assertEquals('getPost', $method);
 
     $this->assertEquals(

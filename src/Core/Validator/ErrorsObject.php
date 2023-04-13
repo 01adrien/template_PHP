@@ -8,11 +8,16 @@ class ErrorsObject
 
   public function push(string $property, string $message)
   {
-    $this->errors[][$property] = $message;
+    $this->errors[$property] = $message;
   }
 
   public function getErrors(): array
   {
     return $this->errors;
+  }
+
+  public function deleteErrors()
+  {
+    $this->errors = [];
   }
 }

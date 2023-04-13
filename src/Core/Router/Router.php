@@ -28,7 +28,7 @@ class Router implements RouterInterface
      * @param  mixed $callable
      * @param  mixed $name
      * @param  mixed $httpMethod
-     * @return self
+     * @return void
      */
     public function addRoute(string $path, $callable, ?string $name = null, string $httpMethod): self
     {
@@ -112,11 +112,18 @@ class Router implements RouterInterface
      * @param  mixed $params
      * @return Response
      */
-    public function redirect(string $path, array $params = []): Response
+    public function redirect(string $path, array $params = [], array $queryParams = []): Response
     {
-        $redirectUri = $this->generateUrl($path, $params);
+        $redirectUri = $this->generateUrl($path, $params, $queryParams);
         return (new Response())
             ->withStatus(301)
             ->withHeader('location', $redirectUri);
+    }
+
+    public function redirectByPath(string $path): Response
+    {
+        return (new Response())
+            ->withStatus(301)
+            ->withHeader('location', $path);
     }
 }

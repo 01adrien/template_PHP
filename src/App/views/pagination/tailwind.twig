@@ -1,0 +1,37 @@
+
+{% if total_count %}
+  <nav aria-label="Page navigation example" class="mb-2 mt-2 flex flex-col items-center">
+    {{ pagination_label(pagination) }}
+    <ul class="inline-flex -space-x-px">
+
+      {{ pagination_button('prev', pagination) }}
+
+      {% if page_count < 4  %}
+        {% for page in range(1, page_count) %}  
+          {{ pagination_widget(pagination, page) }}
+        {% endfor %}
+      {% endif %}
+
+      {% if current_page < 4 and page_count > 6 %}
+        {% for page in range(1, 5) %}
+          {{ pagination_widget(pagination, page) }}
+        {% endfor %}
+      {% endif %}
+
+      {% if  current_page > 3 and current_page < page_count - 2 %}
+        {% for page in range(current_page - 2, current_page + 2) %}
+          {{ pagination_widget(pagination, page) }}
+        {% endfor %}
+      {% endif %}
+
+      {% if  total_count - current_page < 3 and page_count > 5 %}
+        {% for page in range(total_count - 4, total_count) %}
+          {{ pagination_widget(pagination, page) }}
+        {% endfor %}
+      {% endif %}
+
+      {{ pagination_button('next', pagination) }}
+
+    </ul>
+  </nav>
+{% endif %}

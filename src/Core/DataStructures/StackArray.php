@@ -38,9 +38,7 @@ class StackArray extends ArrayObject implements StackInterface
   public function pop(): mixed
   {
     if (!$this->count()) throw new EmptyDataStructureException();
-    $temp = $this[$this->count() - 1];
-    unset($this[$this->count() - 1]);
-    return $temp;
+    return $this->pop();
   }
 
   /**

@@ -5,6 +5,7 @@ const plugin = require('tailwindcss/plugin')
 module.exports = {
   content: [
     "./src/App/views/**/*.twig",
+    "./node_modules/flowbite/**/*.js"
   ],
   /*
   purge: {
@@ -34,4 +35,7 @@ module.exports = {
         },
     },
   },
+  plugins: [
+        require('flowbite/plugin')
+    ]
 }
