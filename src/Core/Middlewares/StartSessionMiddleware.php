@@ -25,6 +25,7 @@ class StartSessionMiddleware implements MiddlewareInterface
    */
   public function process(Request $request, Handler $handler): Response
   {
+
     $this->session->start();
     $response = $handler->handle($request);
     if ($request->getMethod() === 'GET' && !$this->requestService->isXhr($request)) {
