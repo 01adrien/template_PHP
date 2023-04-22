@@ -11,4 +11,6 @@ interface AuthInterface
   public function login(UserInterface $user): void;
   public function logOut(): void;
   public function register(RegisterUserData $data): UserInterface;
+  public function validateAccountActivation(array $params): UserInterface;
+  public function resetPassword(string $email): void;
 }

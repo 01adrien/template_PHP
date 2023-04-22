@@ -5,20 +5,22 @@ namespace Src\Core\Abstracted;
 use Clockwork\Support\Vanilla\Clockwork;
 use PDO;
 use PDOStatement;
+use Src\Core\Interfaces\ConnectionInterface;
 
 abstract class Model
 {
   protected string $table;
-  protected $entity;
-
-  public function __construct(private PDO $pdo)
+  protected string $entity;
+  private PDO $pdo;
+  public function __construct(ConnectionInterface $connectionInterface)
   {
+    $this->pdo = $connectionInterface->pdo();
   }
 
   /**
    * get all records from selected table
    *
-   * @return Entity[] | array
+   * @return array<Entity>
    */
   public function all(): array | Entity
   {
@@ -32,23 +34,29 @@ abstract class Model
   /**
    * get one record from selected table
    *
-   * @param  mixed $id
-   * @return Entity | array | bool 
+   * @param array $params
+   * @return Entity | bool 
    */
-  public function one(array $params): Entity | bool
+  public function one(array $params): ?Entity
   {
-    $time = microtime(true);
     $query = $this
       ->pdo
       ->prepare($this->getByIdQuery());
     $this->setFetchMode($query);
     $query->execute($params);
     $result = $query->fetch();
-    clock()->addDatabaseQuery($this->getByIdQuery(), $params, (microtime(true) - $time) * 1000);
     return $result;
   }
 
-  public function getPaginated(int $limit, int $offset, array $params): Entity | bool | array
+  /**
+   * getPaginated
+   *
+   * @param  int $limit
+   * @param  int $offset
+   * @param  array $params
+   * @return array<Entity>
+   */
+  public function getPaginated(int $limit, int $offset, array $params): array
   {
     $query = $this
       ->pdo
@@ -64,23 +72,26 @@ abstract class Model
    *
    * @param  mixed $field
    * @param  mixed $value
-   * @return Entity | array
+   * @return Entity | array<Entity> | null
    */
-  public function findBy(string $field, string $value): Entity | array | bool
+  public function findBy(string $field, string $value): Entity | array | null
   {
     $query = $this
       ->pdo
       ->prepare($this->findByQuery($field));
     $this->setFetchMode($query);
     $query->execute([$value]);
-    return $query->fetchAll();
+    $result = $query->fetchAll();
+    if (count($result) === 1) return $result[0];
+    if (count($result) > 1) return $result;
+    return null;
   }
 
   /**
    * insert a record in the selected table
    *
    * @param  mixed $params
-   * @return bool
+   * @return bool | int
    */
   public function insert(array $params): bool | int
   {
@@ -143,6 +154,18 @@ abstract class Model
     return $query->fetchColumn();
   }
 
+  /**
+   * exists
+   *
+   * @param  mixed $id
+   * @return bool
+   */
+  public function exists($id): bool
+  {
+    $query = $this->pdo->prepare("SELECT id FROM {$this->table} WHERE id = ?");
+    $query->execute([$id]);
+    return $query->fetchColumn() !== false;
+  }
 
   /**
    *  return no more than the entity and properties no join or else...
@@ -150,7 +173,7 @@ abstract class Model
    * @param  mixed $id
    * @return Entity
    */
-  public function getEntity(int $id): Entity | bool
+  public function getEntity(int $id): ?Entity
   {
     $query = $this
       ->pdo
@@ -158,7 +181,7 @@ abstract class Model
     $this->setFetchMode($query);
     $query->execute([$id]);
     $result = $query->fetch();
-    return $result;
+    return $result ?: null;
   }
 
   /**
@@ -181,7 +204,7 @@ abstract class Model
     }
   }
 
-  protected function findByQuery($field): string
+  protected function findByQuery(string $field): string
   {
     return "SELECT * FROM {$this->table} WHERE $field = ?";
   }

@@ -13,11 +13,11 @@ use Src\App\Services\ResponseService;
 
 class DispatcherMiddleware implements MiddlewareInterface
 {
-  public function __construct(
-    private Container $container,
-    private ResponseService $responseService
-  ) {
-  }
+    public function __construct(
+        private Container $container,
+        private ResponseService $responseService
+    ) {
+    }
   /**
    * process an incoming server request
    *
@@ -25,36 +25,36 @@ class DispatcherMiddleware implements MiddlewareInterface
    * @param  Handler $handler
    * @return Response
    */
-  public function process(Request $request, Handler $handler): Response
-  {
-    $route = $request->getAttribute(Route::class);
+    public function process(Request $request, Handler $handler): Response
+    {
+        $route = $request->getAttribute(Route::class);
 
-    if (is_null($route)) {
-      return $handler->handle($request);
+        if (is_null($route)) {
+            return $handler->handle($request);
+        }
+        if (is_callable($route->getCallback())) {
+            $response  = call_user_func_array(
+                $route->getCallback(),
+                [$request]
+            );
+        }
+        if (is_array($route->getCallback())) {
+            [$className, $method] = $route->getCallback();
+            $response = call_user_func_array(
+                [$this->container->get($className), $method],
+                [$request]
+            );
+        }
+        if (is_string($response)) {
+            return $this->responseService->plainTextResponse(200, $response);
+        } elseif ($response instanceof Response) {
+            return $response;
+        } elseif (is_array($response)) {
+            return $this->responseService->jsonResponse(200, $response);
+        } else {
+            throw new \Exception(
+                'The response format is not correct'
+            );
+        }
     }
-    if (is_callable($route->getCallback())) {
-      $response  = call_user_func_array(
-        $route->getCallback(),
-        [$request]
-      );
-    }
-    if (is_array($route->getCallback())) {
-      [$className, $method] = $route->getCallback();
-      $response = call_user_func_array(
-        [$this->container->get($className), $method],
-        [$request]
-      );
-    }
-    if (is_string($response)) {
-      return $this->responseService->plainTextResponse(200, $response);
-    } elseif ($response instanceof Response) {
-      return $response;
-    } elseif (is_array($response)) {
-      return $this->responseService->jsonResponse(200, $response);
-    } else {
-      throw new \Exception(
-        'The response format is not correct'
-      );
-    }
-  }
 }

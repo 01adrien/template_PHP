@@ -9,35 +9,35 @@ namespace Src\Core\Router;
 class Route
 {
 
-  public function __construct(
-    private string $name,
-    private $callback,
-    private array $parameters
-  ) {
-  }
+    public function __construct(
+        private string $name,
+        private mixed $callback,
+        private array $parameters
+    ) {
+    }
 
   /**
    * @return string
    */
-  public function getName(): string
-  {
-    return $this->name;
-  }
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
   /**
    * @return callable | string
    */
-  public function getCallback()
-  {
-    return $this->callback;
-  }
+    public function getCallback()
+    {
+        return $this->callback;
+    }
 
   /**
    * Retrieve the URL parameters
    * @return string[]
    */
-  public function getParams(): array
-  {
-    return $this->parameters;
-  }
+    public function getParams(): array
+    {
+        return $this->parameters;
+    }
 }

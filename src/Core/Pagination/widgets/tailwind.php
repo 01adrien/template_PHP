@@ -6,10 +6,12 @@
         </li>
       </a>
       <?php foreach (range(1, $pagination->pageCount) as $page) {
-        $bgColor = "bg-white";
-        if ($pagination->currentPage == $page) $bgColor = "bg-gray-300";
-        $linkToPage =  $pagination->createUrl($page);
-        echo ("<a href=$linkToPage
+          $bgColor = "bg-white";
+          if ($pagination->currentPage == $page) {
+              $bgColor = "bg-gray-300";
+          }
+          $linkToPage =  $pagination->createUrl($page);
+          echo ("<a href=$linkToPage
         <li>
           <button class='px-4 py-2 $bgColor border border-r-0 '>$page</button>
         </li></a>");

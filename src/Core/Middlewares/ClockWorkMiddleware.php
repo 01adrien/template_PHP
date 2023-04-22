@@ -12,11 +12,11 @@ use Src\Core\Enums\AppEnv;
 
 class ClockWorkMiddleware implements MiddlewareInterface
 {
-  public function __construct(
-    private Clockwork $clockwork,
-    private Config $config
-  ) {
-  }
+    public function __construct(
+        private Clockwork $clockwork,
+        private Config $config
+    ) {
+    }
   /**
    * process an incoming server request
    *
@@ -24,14 +24,14 @@ class ClockWorkMiddleware implements MiddlewareInterface
    * @param  Handler $handler
    * @return Response
    */
-  public function process(Request $request, Handler $handler): Response
-  {
-    if (AppEnv::isDevelopment($this->config->get('appEnv'))) {
-      return $this
-        ->clockwork
-        ->usePsrMessage($request, $handler->handle($request))
-        ->requestProcessed();
+    public function process(Request $request, Handler $handler): Response
+    {
+        if (AppEnv::isDevelopment($this->config->get('appEnv'))) {
+            return $this
+            ->clockwork
+            ->usePsrMessage($request, $handler->handle($request))
+            ->requestProcessed();
+        }
+        return $handler->handle($request);
     }
-    return $handler->handle($request);
-  }
 }

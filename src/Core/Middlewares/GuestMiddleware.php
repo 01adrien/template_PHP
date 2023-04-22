@@ -12,11 +12,11 @@ use Src\Core\Router\Router;
 
 class GuestMiddleware implements MiddlewareInterface
 {
-  public function __construct(
-    private Container $container,
-    private SessionInterface $session
-  ) {
-  }
+    public function __construct(
+        private Container $container,
+        private SessionInterface $session
+    ) {
+    }
   /**
    * process an incoming server request
    *
@@ -24,20 +24,19 @@ class GuestMiddleware implements MiddlewareInterface
    * @param  Handler $handler
    * @return Response
    */
-  public function process(Request $request, Handler $handler): Response
-  {
-    $router = $this->container->get(Router::class);
-    $route = $router->match($request);
+    public function process(Request $request, Handler $handler): Response
+    {
+        $router = $this->container->get(Router::class);
+        $route = $router->match($request);
 
-    $onlyGuestPage = ['signin', 'signup'];
+        $onlyGuestPage = ['signin', 'signup'];
 
-    if (
-      $this->session->has('user') &&
-      in_array($route?->getName(), $onlyGuestPage)
+        if ($this->session->has('user') &&
+        in_array($route?->getName(), $onlyGuestPage)
 
-    ) {
-      return $router->redirect('dashboard');
+        ) {
+            return $router->redirect('home');
+        }
+        return $handler->handle($request);
     }
-    return $handler->handle($request);
-  }
 }

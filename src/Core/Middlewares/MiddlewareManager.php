@@ -16,11 +16,11 @@ class MiddlewareManager implements RequestHandlerInterface
    * @param StackInterface $stack
    * @param RequestHandlerInterface $fallback
    */
-  public function __construct(
-    public StackInterface $stack,
-    private RequestHandlerInterface $fallback
-  ) {
-  }
+    public function __construct(
+        public StackInterface $stack,
+        private RequestHandlerInterface $fallback
+    ) {
+    }
 
   /**
    * push a middleware into the stack
@@ -28,11 +28,11 @@ class MiddlewareManager implements RequestHandlerInterface
    * @param MiddlewareInterface $middleware
    * @return self
    */
-  public function push(mixed $middleware): self
-  {
-    $this->stack->push($middleware);
-    return $this;
-  }
+    public function push(mixed $middleware): self
+    {
+        $this->stack->push($middleware);
+        return $this;
+    }
 
   /**
    * Handles a request and produces a response.
@@ -41,17 +41,17 @@ class MiddlewareManager implements RequestHandlerInterface
    * @param ServerRequestInterface $request
    * @return ResponseInterface
    */
-  public function handle(ServerRequestInterface $request): ResponseInterface
-  {
-    if (!$this->stack->length()) {
-      return $this->fallback->handle($request);
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        if (!$this->stack->length()) {
+            return $this->fallback->handle($request);
+        }
+        $middleware = $this->stack->pop();
+        return $middleware->process($request, $this);
     }
-    $middleware = $this->stack->pop();
-    return $middleware->process($request, $this);
-  }
 
-  public function getStack()
-  {
-    return $this->stack;
-  }
+    public function getStack(): StackInterface
+    {
+        return $this->stack;
+    }
 }

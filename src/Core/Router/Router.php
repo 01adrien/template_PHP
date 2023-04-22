@@ -7,14 +7,12 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Src\Core\Interfaces\RouterInterface;
 use Src\Core\Router\Route;
-use Src\Core\Attributes\Routes\{
-    Base,
-    Route as RouteAttribute
-};
+use Src\Core\Attributes\Routes\Base;
+use Src\Core\Attributes\Routes\Route as RouteAttribute;
 
 class Router implements RouterInterface
 {
-    private $router;
+    private RouterContainer $router;
 
     public function __construct()
     {
@@ -28,9 +26,9 @@ class Router implements RouterInterface
      * @param  mixed $callable
      * @param  mixed $name
      * @param  mixed $httpMethod
-     * @return void
+     * @return self
      */
-    public function addRoute(string $path, $callable, ?string $name = null, string $httpMethod): self
+    public function addRoute(string $path, $callable, string $name, string $httpMethod): self
     {
         $method = strtolower($httpMethod);
         $this->router->getMap()->$method($name, $path, $callable);

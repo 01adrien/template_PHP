@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<psalm errorBaseline="psalm-baseline.xml">
+    <projectFiles>
+        <file name="public/index.php" />
+        <directory name="src" />
+    </projectFiles>
+</psalm>

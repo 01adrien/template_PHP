@@ -1,6 +1,7 @@
 {
   "php.stubs": [
     "*",
-    "xdebug"
+    "xdebug",
+    "memcache"
   ]
 }

@@ -6,14 +6,12 @@ use Src\App\Modules\{
   AdminModule,
   AuthModule,
   ExempleModule,
+  MailerModule,
   UserModule
 };
 
-
 require dirname(__DIR__) . '/src/App/config/pathsConstants.php';
-
 require ROOT_DIR . '/vendor/autoload.php';
-
 require APP_DIR   . '/config/errorsConfig.php';
 
 $app = new App(
@@ -26,10 +24,8 @@ $app = new App(
   dependencies: [
     APP_DIR . '/config/dependencies.php',
     CORE_DIR . '/Config/dependencies.php',
-    ROOT_DIR . '/config.php'
   ]
 );
 
 $response = $app->run(ServerRequest::fromGlobals());
-
 \Http\Response\send($response);

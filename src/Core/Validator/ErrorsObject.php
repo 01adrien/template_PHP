@@ -6,7 +6,7 @@ class ErrorsObject
 {
   private array $errors = [];
 
-  public function push(string $property, string $message)
+  public function push(string $property, string $message): void
   {
     $this->errors[$property] = $message;
   }
@@ -16,7 +16,7 @@ class ErrorsObject
     return $this->errors;
   }
 
-  public function deleteErrors()
+  public function deleteErrors(): void
   {
     $this->errors = [];
   }

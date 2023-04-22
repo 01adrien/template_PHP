@@ -21,14 +21,14 @@ class TrailingSlashMiddleware implements MiddlewareInterface
    * @param RequestHandlerInterface $handler
    * @return ResponseInterface
    */
-  public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-  {
-    $uri = $request->getUri()->getPath();
-    if (!empty($uri) && $uri[-1] === "/" && strlen($uri) > 1) {
-      return (new \GuzzleHttp\Psr7\Response())
-        ->withStatus(301)
-        ->withHeader('Location', substr($uri, 0, -1));
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $uri = $request->getUri()->getPath();
+        if (!empty($uri) && $uri[-1] === "/" && strlen($uri) > 1) {
+            return (new \GuzzleHttp\Psr7\Response())
+            ->withStatus(301)
+            ->withHeader('Location', substr($uri, 0, -1));
+        }
+        return $handler->handle($request);
     }
-    return $handler->handle($request);
-  }
 }

@@ -1,7 +1,13 @@
 {% extends "layouts/base.twig" %}
-{% block title %}exemple page{% endblock %}
+{% block title %}exemple page
+{% endblock %}
 {% block body %}
-    {% for item in items %}
-        <p>{{ item.id }} => {{ item.title }} {{ item.created_at|date("d/m/Y") }}</p>
-    {% endfor %}
+	<h1>helloo</h1>
+
+	{% for item in items %}
+		<p>{{ item.id }}
+			=>
+			{{ item.title }}
+			{{ item.created_at|date("d/m/Y") }}</p>
+	{% endfor %}
 {% endblock %}

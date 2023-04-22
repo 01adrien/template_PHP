@@ -12,11 +12,11 @@ use Src\App\Services\ResponseService;
 class NotFoundHandler implements RequestHandlerInterface
 {
 
-  public function __construct(
-    private RequestService $requestService,
-    private ResponseService $responseService
-  ) {
-  }
+    public function __construct(
+        private RequestService $requestService,
+        private ResponseService $responseService
+    ) {
+    }
   /**
    * Handles a request and produces a response.
    *
@@ -25,12 +25,12 @@ class NotFoundHandler implements RequestHandlerInterface
    * @param ServerRequestInterface $request
    * @return ResponseInterface
    */
-  public function handle(ServerRequestInterface $request): ResponseInterface
-  {
-    $path = $request->getUri()->getPath();
-    if ($this->requestService->isXhr($request)) {
-      return $this->responseService->jsonResponse(404, ['msg' => "end point ' $path ' not found"]);
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $path = $request->getUri()->getPath();
+        if ($this->requestService->isXhr($request)) {
+            return $this->responseService->jsonResponse(404, ['msg' => "end point ' $path ' not found"]);
+        }
+        return $this->responseService->notFound404();
     }
-    return $this->responseService->plainTextResponse(404, require VIEWS_DIR . '/errors/404.html');
-  }
 }

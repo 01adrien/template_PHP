@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.9.0@8b9ad1eb9e8b7d3101f949291da2b9f7767cd163">
+  <file src="src/App/App.php">
+    <UndefinedConstant>
+      <code>ROOT_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/App/Controllers/AuthController.php">
+    <TypeDoesNotContainType>
+      <code>!count($activationKey) === 2</code>
+    </TypeDoesNotContainType>
+    <UndefinedConstant>
+      <code>VIEWS_DIR</code>
+      <code>VIEWS_DIR</code>
+    </UndefinedConstant>
+    <UnresolvableInclude>
+      <code><![CDATA[require VIEWS_DIR . '/html/pages/activationMessage.html']]></code>
+      <code><![CDATA[require VIEWS_DIR . '/html/pages/activationSucces.html']]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="src/App/Models/ExempleModel.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$this->entity]]></code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/App/Models/UserModel.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$this->entity]]></code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/App/Services/MailService.php">
+    <MissingClosureReturnType>
+      <code><![CDATA[fn (array $params) => Mailer::send($params['config'], $params['mail'])]]></code>
+    </MissingClosureReturnType>
+  </file>
+  <file src="src/App/Services/QueueService.php">
+    <InvalidReturnStatement>
+      <code>$job</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>Job</code>
+    </InvalidReturnType>
+  </file>
+  <file src="src/App/Services/ResponseService.php">
+    <UndefinedConstant>
+      <code>VIEWS_DIR</code>
+      <code>VIEWS_DIR</code>
+    </UndefinedConstant>
+    <UndefinedInterfaceMethod>
+      <code>withStatus</code>
+    </UndefinedInterfaceMethod>
+    <UnresolvableInclude>
+      <code><![CDATA[require VIEWS_DIR . '/html/errors/403.html']]></code>
+      <code><![CDATA[require VIEWS_DIR . '/html/errors/404.html']]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="src/App/Services/UserActivationService.php">
+    <PossiblyInvalidArrayAccess>
+      <code>$activationData</code>
+    </PossiblyInvalidArrayAccess>
+  </file>
+  <file src="src/App/Services/UserService.php">
+    <InvalidReturnStatement>
+      <code>$user</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>UserInterface | bool</code>
+    </InvalidReturnType>
+    <PossiblyInvalidPropertyAssignmentValue>
+      <code>$insertedID</code>
+    </PossiblyInvalidPropertyAssignmentValue>
+  </file>
+  <file src="src/App/config/config.php">
+    <PossiblyUndefinedArrayOffset>
+      <code><![CDATA[$_ENV['APP_ENV']]]></code>
+    </PossiblyUndefinedArrayOffset>
+    <UndefinedConstant>
+      <code>APP_DIR</code>
+      <code>ROOT_DIR</code>
+      <code>STORAGE_DIR</code>
+      <code>STORAGE_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/App/config/dependencies.php">
+    <UndefinedConstant>
+      <code>APP_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/App/config/errorsConfig.php">
+    <UndefinedConstant>
+      <code>APP_DIR</code>
+      <code>ROOT_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/App/database/migrations/20230321105036_create_exemple_table.php">
+    <MissingReturnType>
+      <code>change</code>
+    </MissingReturnType>
+    <PropertyNotSetInConstructor>
+      <code>CreateExempleTable</code>
+      <code>CreateExempleTable</code>
+      <code>CreateExempleTable</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/App/database/migrations/20230325005010_create_receipt_table.php">
+    <MissingReturnType>
+      <code>change</code>
+    </MissingReturnType>
+    <PropertyNotSetInConstructor>
+      <code>CreateReceiptTable</code>
+      <code>CreateReceiptTable</code>
+      <code>CreateReceiptTable</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/App/database/migrations/20230325080704_create_user.php">
+    <MissingReturnType>
+      <code>change</code>
+    </MissingReturnType>
+    <PropertyNotSetInConstructor>
+      <code>CreateUser</code>
+      <code>CreateUser</code>
+      <code>CreateUser</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/App/database/migrations/20230325220830_add_password_field_on_user.php">
+    <MissingReturnType>
+      <code>change</code>
+    </MissingReturnType>
+    <PropertyNotSetInConstructor>
+      <code>AddPasswordFieldOnUser</code>
+      <code>AddPasswordFieldOnUser</code>
+      <code>AddPasswordFieldOnUser</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/App/database/seeds/ExempleSeed.php">
+    <PropertyNotSetInConstructor>
+      <code>ExempleSeed</code>
+      <code>ExempleSeed</code>
+      <code>ExempleSeed</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Core/Abstracted/AbstractFactory.php">
+    <MissingReturnType>
+      <code>make</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Core/Abstracted/Model.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$this->entity]]></code>
+    </ArgumentTypeCoercion>
+    <InvalidCast>
+      <code>$field</code>
+      <code>$field</code>
+    </InvalidCast>
+    <InvalidReturnStatement>
+      <code><![CDATA[$this->pdo->lastInsertId()]]></code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>bool | int</code>
+    </InvalidReturnType>
+    <PropertyNotSetInConstructor>
+      <code>$entity</code>
+      <code>$table</code>
+    </PropertyNotSetInConstructor>
+    <UndefinedFunction>
+      <code>clock()</code>
+    </UndefinedFunction>
+  </file>
+  <file src="src/Core/Auth/Auth.php">
+    <PossiblyInvalidArrayAccess>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+      <code>$user</code>
+    </PossiblyInvalidArrayAccess>
+  </file>
+  <file src="src/Core/Cache/CacheSystem/FileCache.php">
+    <UndefinedConstant>
+      <code>STORAGE_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Core/Commands/QueueCommand.php">
+    <UndefinedConstant>
+      <code>APP_DIR</code>
+      <code>CORE_DIR</code>
+    </UndefinedConstant>
+    <UnresolvableInclude>
+      <code><![CDATA[require getcwd() . '/src/App/config/pathsConstants.php']]></code>
+    </UnresolvableInclude>
+  </file>
+  <file src="src/Core/Commands/ServeCommand.php">
+    <PropertyNotSetInConstructor>
+      <code>$process</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Core/Config/Config.php">
+    <UnresolvableInclude>
+      <code>require $configPath</code>
+    </UnresolvableInclude>
+  </file>
+  <file src="src/Core/Config/dependencies.php">
+    <UndefinedConstant>
+      <code>BUILD_DIR</code>
+      <code>BUILD_DIR</code>
+      <code>STORAGE_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Core/DataStructures/StackArray.php">
+    <MissingTemplateParam>
+      <code>StackArray</code>
+    </MissingTemplateParam>
+  </file>
+  <file src="src/Core/Interfaces/MailerInterface.php">
+    <MissingReturnType>
+      <code>send</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Core/Interfaces/RouterInterface.php">
+    <MissingParamType>
+      <code>$callable</code>
+    </MissingParamType>
+  </file>
+  <file src="src/Core/Log/Factory/LoggerFactory.php">
+    <InvalidArgument>
+      <code>$config</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/Core/Log/LogSystem/MonologLogger.php">
+    <ConstructorSignatureMismatch>
+      <code>$config</code>
+    </ConstructorSignatureMismatch>
+    <ImplementedParamTypeMismatch>
+      <code>$config</code>
+    </ImplementedParamTypeMismatch>
+    <InvalidExtendClass>
+      <code>Logger</code>
+    </InvalidExtendClass>
+    <MethodSignatureMismatch>
+      <code>public function __construct(private array $config)</code>
+      <code>public function __construct(private array $config)</code>
+    </MethodSignatureMismatch>
+    <MissingReturnType>
+      <code>getLogger</code>
+    </MissingReturnType>
+    <PropertyNotSetInConstructor>
+      <code>MonologLogger</code>
+      <code>MonologLogger</code>
+      <code>MonologLogger</code>
+      <code>MonologLogger</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Core/Mail/Mailer.php">
+    <MissingReturnType>
+      <code>send</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Core/Mail/mailSystem/SymphonyMailer.php">
+    <MissingReturnType>
+      <code>send</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Core/Middlewares/AdminMiddleware.php">
+    <InvalidArrayAccess>
+      <code>$className</code>
+      <code>$className</code>
+      <code>$method</code>
+      <code>$method</code>
+    </InvalidArrayAccess>
+    <InvalidArrayOffset>
+      <code>[$className, $method]</code>
+    </InvalidArrayOffset>
+  </file>
+  <file src="src/Core/Middlewares/AuthMiddleware.php">
+    <InvalidArrayAccess>
+      <code>$className</code>
+      <code>$className</code>
+      <code>$method</code>
+      <code>$method</code>
+    </InvalidArrayAccess>
+    <InvalidArrayOffset>
+      <code>[$className, $method]</code>
+    </InvalidArrayOffset>
+  </file>
+  <file src="src/Core/Middlewares/CsrfMiddleware.php">
+    <InvalidReturnType>
+      <code>Response</code>
+    </InvalidReturnType>
+    <PossiblyInvalidArgument>
+      <code>$body</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidArrayAccess>
+      <code><![CDATA[$body[$this->formKey]]]></code>
+      <code><![CDATA[$body[$this->formKey]]]></code>
+    </PossiblyInvalidArrayAccess>
+  </file>
+  <file src="src/Core/Middlewares/DispatcherMiddleware.php">
+    <PossiblyUndefinedVariable>
+      <code>$response</code>
+    </PossiblyUndefinedVariable>
+  </file>
+  <file src="src/Core/Middlewares/ErrorsHandlerMiddleware.php">
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$request->getParsedBody()]]></code>
+    </PossiblyInvalidArgument>
+  </file>
+  <file src="src/Core/Middlewares/MethodMiddleware.php">
+    <PossiblyInvalidArgument>
+      <code>$parsedBody</code>
+    </PossiblyInvalidArgument>
+  </file>
+  <file src="src/Core/Middlewares/RouterMiddleware.php">
+    <PossiblyInvalidDocblockTag>
+      <code>@var Router</code>
+    </PossiblyInvalidDocblockTag>
+  </file>
+  <file src="src/Core/Middlewares/TrailingSlashMiddleware.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[(new \GuzzleHttp\Psr7\Response())
+            ->withStatus(301)
+            ->withHeader('Location', substr($uri, 0, -1))]]></code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType>
+      <code>ResponseInterface</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/Core/Pagination/Pagination.php">
+    <InvalidPropertyAssignmentValue>
+      <code><![CDATA[ceil($this->totalCount / $this->perPage)]]></code>
+    </InvalidPropertyAssignmentValue>
+    <PropertyNotSetInConstructor>
+      <code>$basePath</code>
+      <code>$queryParams</code>
+      <code>$totalCount</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Core/Pagination/PaginationWidget.php">
+    <PropertyNotSetInConstructor>
+      <code>$pagination</code>
+      <code>$renderer</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Core/Pagination/widgets/tailwind.php">
+    <UndefinedGlobalVariable>
+      <code>$pagination</code>
+      <code>$pagination</code>
+      <code>$pagination</code>
+      <code>$pagination</code>
+      <code>$pagination</code>
+      <code>$pagination</code>
+      <code>$pagination</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="src/Core/Renderer/TwigExtensions/DateExtension.php">
+    <InvalidReturnStatement>
+      <code>strtotime($date)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code>string</code>
+    </InvalidReturnType>
+    <MissingReturnType>
+      <code>timeAgo</code>
+    </MissingReturnType>
+  </file>
+  <file src="src/Core/Renderer/TwigExtensions/PaginationExtension.php">
+    <UnhandledMatchCondition>
+      <code>$type</code>
+    </UnhandledMatchCondition>
+  </file>
+  <file src="src/Core/Renderer/TwigExtensions/RouterExtension.php">
+    <PossiblyUndefinedArrayOffset>
+      <code><![CDATA[$_SERVER['REQUEST_URI']]]></code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
+  <file src="src/Core/Renderer/TwigRenderer.php">
+    <MissingReturnType>
+      <code>getTwig</code>
+    </MissingReturnType>
+    <PossiblyNullArgument>
+      <code>$path</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Core/Renderer/TwigRendererFactory.php">
+    <UndefinedConstant>
+      <code>VIEWS_DIR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Core/Router/Router.php">
+    <LessSpecificReturnStatement>
+      <code><![CDATA[(new Response())
+            ->withStatus(301)
+            ->withHeader('location', $path)]]></code>
+      <code><![CDATA[(new Response())
+            ->withStatus(301)
+            ->withHeader('location', $redirectUri)]]></code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType>
+      <code>Response</code>
+      <code>Response</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/Core/Session/Session.php">
+    <PossiblyInvalidArrayOffset>
+      <code>$_SESSION[$key]</code>
+    </PossiblyInvalidArrayOffset>
+  </file>
+  <file src="src/Core/Validator/Validator.php">
+    <ArgumentTypeCoercion>
+      <code>$attributeName</code>
+    </ArgumentTypeCoercion>
+    <DocblockTypeContradiction>
+      <code>!$uploadedFile</code>
+      <code>$uploadedFile</code>
+    </DocblockTypeContradiction>
+    <PossiblyFalseArgument>
+      <code><![CDATA[strpos($mimeType, ';')]]></code>
+    </PossiblyFalseArgument>
+    <PossiblyInvalidArgument>
+      <code>$tmpFilePath</code>
+      <code>$tmpFilePath</code>
+    </PossiblyInvalidArgument>
+    <PossiblyNullArgument>
+      <code>$fileName</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="vendor/monolog/monolog/src/Monolog/Logger.php">
+    <MismatchingDocblockParamType>
+      <code>string</code>
+    </MismatchingDocblockParamType>
+    <MoreSpecificImplementedParamType>
+      <code>$level</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="vendor/symfony/console/Command/Command.php">
+    <PossiblyNullArgument>
+      <code>$name</code>
+    </PossiblyNullArgument>
+  </file>
+</files>

@@ -8,20 +8,17 @@ use Src\Core\Attributes\Validation\Date;
 
 trait EntityDateBehavior
 {
+  /** @var string */
   #[Date]
-  public string|DateTime|null $created_at = null;
-
+  public string $created_at;
+  
+  /** @var string */
   #[Date]
-  public string|DateTime|null $updated_at = null;
+  public string $updated_at;
 
   public function getDateObject(string $date): DateTime
   {
-    if (is_string($date)) {
-      return $date = DateTime::createFromFormat(
-        'Y-m-d H:i:s',
-        $date
-      );
-    } else throw new Exception('the date must be a string');
+    return $date = DateTime::createFromFormat('Y-m-d H:i:s',$date);
   }
 
   public function setCreatedAt(DateTime $date): self

@@ -10,22 +10,22 @@ class CsrfExtension extends AbstractExtension
 {
 
 
-  public function __construct(private  CsrfMiddleware $csrfMiddleware)
-  {
-    $this->csrfMiddleware = $csrfMiddleware;
-  }
+    public function __construct(private CsrfMiddleware $csrfMiddleware)
+    {
+        $this->csrfMiddleware = $csrfMiddleware;
+    }
 
-  public function getFunctions()
-  {
-    return [
-      new TwigFunction('csrf_input', [$this, 'csrfInput'], ['is_safe' => ['html']])
-    ];
-  }
+    public function getFunctions()
+    {
+        return [
+        new TwigFunction('csrf_input', [$this, 'csrfInput'], ['is_safe' => ['html']])
+        ];
+    }
 
-  public function csrfInput()
-  {
-    return '<input class=csrf type="hidden" ' .
-      'name="' . $this->csrfMiddleware->getFormKey() . '" ' .
-      'value="' . $this->csrfMiddleware->generateToken() . '"/>';
-  }
+    public function csrfInput(): string
+    {
+        return '<input class=csrf type="hidden" ' .
+        'name="' . $this->csrfMiddleware->getFormKey() . '" ' .
+        'value="' . $this->csrfMiddleware->generateToken() . '"/>';
+    }
 }

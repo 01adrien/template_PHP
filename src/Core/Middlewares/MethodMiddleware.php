@@ -17,15 +17,14 @@ class MethodMiddleware implements MiddlewareInterface
    * @param  Handler $handler
    * @return ResponseInterface
    */
-  public function process(Request $request, Handler $handler): ResponseInterface
-  {
-    $parsedBody = $request->getParsedBody();
-    if (
-      array_key_exists('_method', $parsedBody) &&
-      in_array($parsedBody['_method'], ['DELETE', 'PUT'])
-    ) {
-      $request = $request->withMethod($parsedBody['_method']);
+    public function process(Request $request, Handler $handler): ResponseInterface
+    {
+        $parsedBody = $request->getParsedBody();
+        if (array_key_exists('_method', $parsedBody) &&
+        in_array($parsedBody['_method'], ['DELETE', 'PUT'])
+        ) {
+            $request = $request->withMethod($parsedBody['_method']);
+        }
+        return $handler->handle($request);
     }
-    return $handler->handle($request);
-  }
 }

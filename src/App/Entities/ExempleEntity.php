@@ -2,38 +2,38 @@
 
 namespace Src\App\Entities;
 
-use DateTime;
 use \Src\Core\Behavior\EntityDateBehavior;
 use Src\Core\Abstracted\Entity;
-use Src\Core\Attributes\Validation\{
-  Date,
-  Length,
-  Required
-};
+use Src\Core\Attributes\Validation\Length;
+use Src\Core\Attributes\Validation\Required;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 class ExempleEntity extends Entity
 {
 
-  use EntityDateBehavior;
+    use EntityDateBehavior;
 
-  #[Length(2, 50), Required]
-  public ?string $title = null;
+    /** @var string */
+    #[Length(2, 50), Required]
+    public string $title;
+  
+    /** @var string */
+    #[Length(2, 1000), Required]
+    public string $content;
 
-  #[Length(2, 1000), Required]
-  public ?string $content = null;
+    public function __construct()
+    {
+    }
 
-  #[Date]
-  public string|DateTime|null $created_at = null;
+    public function setTitle(string $title): self
+    {
+        $this->title = trim($title);
+        return $this;
+    }
 
-  public function setTitle(string $title): self
-  {
-    $this->title = trim($title);
-    return $this;
-  }
-
-  public function setContent(string $content): self
-  {
-    $this->content = trim($content);
-    return $this;
-  }
+    public function setContent(string $content): self
+    {
+        $this->content = trim($content);
+        return $this;
+    }
 }

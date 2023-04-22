@@ -2,7 +2,9 @@
 
 namespace Src\Core\Enums;
 
-enum StorageDriver
+enum StorageDriver: string
 {
-  case local;
+    case Local = 'local';
+    case Ftp = 'ftp';
+    case S3 = 'S3';
 }

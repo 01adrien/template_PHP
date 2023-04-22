@@ -8,8 +8,8 @@ $dotenv->load();
 return
     [
         'paths' => [
-            'migrations' => './src/Core/Database/migrations',
-            'seeds' => './src/Core/Database/seeds'
+            'migrations' => APP_DIR . '/database/migrations',
+            'seeds' => APP_DIR . '/database/seeds'
         ],
         'environments' => [
             'default_migration_table' => 'phinxlog',

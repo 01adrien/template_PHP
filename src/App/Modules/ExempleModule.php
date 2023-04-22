@@ -8,12 +8,12 @@ use Src\Core\Router\Router;
 
 class ExempleModule extends Module
 {
-  public function __construct(private Router $router)
-  {
-    $this
-      ->router
-      ->registerRoutesFromControllersAttributes([
+    public function __construct(private Router $router)
+    {
+        $this
+        ->router
+        ->registerRoutesFromControllersAttributes([
         ExempleController::class
-      ]);
-  }
+        ]);
+    }
 }

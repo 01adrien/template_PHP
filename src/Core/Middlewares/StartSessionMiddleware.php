@@ -13,9 +13,9 @@ use Src\Core\Interfaces\SessionInterface;
 class StartSessionMiddleware implements MiddlewareInterface
 {
 
-  public function __construct(private SessionInterface $session, private RequestService $requestService)
-  {
-  }
+    public function __construct(private SessionInterface $session, private RequestService $requestService)
+    {
+    }
   /**
    * process an incoming server request
    *
@@ -23,15 +23,15 @@ class StartSessionMiddleware implements MiddlewareInterface
    * @param  Handler $handler
    * @return Response
    */
-  public function process(Request $request, Handler $handler): Response
-  {
+    public function process(Request $request, Handler $handler): Response
+    {
 
-    $this->session->start();
-    $response = $handler->handle($request);
-    if ($request->getMethod() === 'GET' && !$this->requestService->isXhr($request)) {
-      $this->session->put('previousUrl', (string) $request->getUri()->getPath());
+        $this->session->start();
+        $response = $handler->handle($request);
+        if ($request->getMethod() === 'GET' && !$this->requestService->isXhr($request)) {
+            $this->session->put('previousUrl', $request->getUri()->getPath());
+        }
+        $this->session->save();
+        return $response;
     }
-    $this->session->save();
-    return $response;
-  }
 }

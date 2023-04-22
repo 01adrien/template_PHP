@@ -33,12 +33,12 @@
   }
   .btn-error {
     @apply text-white bg-red-700 hover:bg-red-800 focus:ring-red-300
-  } 
+  }
   .nav-link {
     @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
   }
   .form-input {
-    @apply bg-slate-50 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 text-gray-900 sm:text-sm w-full p-2.5 rounded-t-lg 
+    @apply bg-slate-50 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 text-gray-900 sm:text-sm w-full p-2.5 rounded-t-lg
   }
   .label {
     @apply block mb-2 text-sm font-medium text-gray-900
@@ -50,7 +50,7 @@
     @apply p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50
   }
   .pagination {
-    @apply px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 
+    @apply px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700
   }
   .modal-container {
     @apply fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full
@@ -59,7 +59,7 @@
     @apply block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:border-blue-400 focus:ring-0
   }
   .file-input {
-    @apply bg-slate-50 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 text-gray-900 sm:text-sm w-full rounded-t-lg 
+    @apply bg-slate-50 border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-400 text-gray-900 sm:text-sm w-full rounded-t-lg
   }
 
 }
